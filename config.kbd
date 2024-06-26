@@ -1,0 +1,63 @@
+(defcfg
+  ;; Define the input and output device here
+  input  (device-file "/dev/input/event3")
+  output (uinput-sink "KMonad output")
+  fallthrough false
+)
+
+(defalias
+  raise (layer-toggle raised)
+  lower (layer-toggle lowered)
+
+  sft_b (tap-hold-next-release 180 bspc lsft)
+  sft_' (tap-hold-next-release 180 ' rsft)
+
+  alt_z (tap-hold-next-release 180 z lalt)
+  alt_/ (tap-hold-next-release 180 / ralt)
+  alt_| (tap-hold-next-release 180 \\ ralt)
+
+  ctl_t (tap-hold-next-release 180 tab lctl)
+
+  spc_r (tap-hold 180 spc @raise)
+  ret_l (tap-hold 180 ret @lower)
+)
+
+(defsrc
+  esc    f1     f2     f3     f4     f5     f6     f7     f8     f9     f10    f11    f12    home   end    ins    del
+  grv    1      2      3      4      5      6      7      8      9      0      -      =      bspc
+  tab    q      w      e      r      t      y      u      i      o      p      [      ]      \
+  caps   a      s      d      f      g      h      j      k      l      ;      '      ret
+  lsft   z      x      c      v      b      n      m      ,      .      /      rsft
+  wkup   lctl   lmet   lalt          spc           ralt   prnt   rctl     pgup   up     pgdn
+                                                                          left   down   rght
+)
+
+(deflayer colmak-dh
+  _      _      _      _      _      _      _      _      _      _      _      _      _        _      _      _      _
+  _      _      _      _      _      _      _      _      _      _      _      _      _        _
+  =      q      w      f      p      b      j      l      u      y      ;      -      _        _
+  @sft_b a      r      s      t      g      m      n      e      i      o      @sft_' _
+  lmet   x      c      d      v      @alt_z k      h      ,      .      @alt_/ rctl
+  _      _      @ctl_t @ret_l        @spc_r        esc    _       _         _      _      _
+                                                                            _      _      _
+)
+
+(deflayer raised
+  _      _      _      _      _      _      _      _      _      _      _      _      _        _      _      _      _
+  _      _      _      _      _      _      _      _      _      _      _      _      _        _
+  grv    !      @      #      $      %      ^      &      *      \(     \)     -      _        _
+  @sft_b 1      2      3      4      5      6      7      8      9      0      @sft_' _
+  lmet   lalt   [      ]      _      _      _      _      {      }      @alt_| rctl
+  _      _      @ctl_t @ret_l        _             esc    _       _         _      _      _
+                                                                            _      _      _
+)
+
+(deflayer lowered
+  _      _      _      _      _      _      _      _      _      _      _      _      _        _      _      _      _
+  _      _      _      _      _      _      _      _      _      _      _      _      _        _
+  _      _      _      _      _      _      down   rght   pgup   end    _      _      _        _
+  @sft_b _      _      stop   play   _      _      _      _      _      _      @sft_' _
+  lmet   _      _      _      _      lalt   up     left          _      _      ralt   rctl
+  _      _      @ctl_t _             @spc_r        esc    _       _         _      _      _
+                                                                            _      _      _
+)
