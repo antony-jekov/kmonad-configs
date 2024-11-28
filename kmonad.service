@@ -1,0 +1,14 @@
+[Unit]
+Description=Colemak-DH keyboard service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/kmonad /home/jekov/.kmonad/hp-zbook/colemak_dh.kbd
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+
